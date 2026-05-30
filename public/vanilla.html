@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Referral PWA</title>
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#121214">
+  <link rel="stylesheet" href="/styles.css">
+
+  <!-- Required CDNs -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html5-qrcode/2.3.8/html5-qrcode.min.js"></script>
+</head>
+<body>
+
+  <!-- App Container -->
+  <div id="app">
+
+    <!-- 1. Store Owner View -->
+    <div id="owner-view" class="panel active">
+      <div class="panel-header">
+        <h2>Store Owner Panel</h2>
+        <p>Manage campaign & verify</p>
+      </div>
+      <div class="panel-content">
+        <button id="gen-qr-btn" class="primary-btn">Generate Claim Code</button>
+        <div class="qr-container" id="owner-qr-container" style="display:none;">
+            <div id="store-qr"></div>
+        </div>
+
+        <div style="margin-top: 32px;">
+          <h3 style="margin-bottom: 16px; font-size: 18px; color: var(--text-main);">Scan Customer Code</h3>
+          <div class="reader-wrapper">
+            <div id="reader"></div>
+          </div>
+          <button id="start-scan-btn" class="secondary-btn">Start Scanner</button>
+          <div id="scan-result" style="margin-top: 16px; font-weight: bold; text-align: center; font-size: 18px;"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2. Referrer View -->
+    <div id="referrer-view" class="panel">
+      <div class="panel-header">
+        <h2>Refer a Friend</h2>
+        <p>Share this card and get rewarded!</p>
+      </div>
+      <div class="panel-content">
+        <!-- Hidden Canvas -->
+        <canvas id="social-canvas" width="1080" height="1350" style="display:none;"></canvas>
+
+        <!-- Visible Preview Image -->
+        <div class="image-wrapper">
+          <img id="card-preview" alt="Referral Card Preview">
+        </div>
+
+        <div class="actions">
+          <button id="download-card-btn" class="primary-btn">Download Card to Gallery</button>
+          <button id="copy-link-btn" class="secondary-btn">Copy Text Link</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3. Referee View -->
+    <div id="referee-view" class="panel">
+      <div class="panel-header">
+        <h2>Your Discount Code</h2>
+        <p>Show this to the cashier to redeem</p>
+      </div>
+      <div class="panel-content">
+        <div class="qr-container" id="referee-qr-container" style="display:none;">
+          <div id="referee-qr"></div>
+        </div>
+        <p id="referee-message" style="text-align:center; color: var(--text-muted); margin-top: 16px;">
+          No redeem token found. Get a referral link first!
+        </p>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Bottom Navigation -->
+  <nav class="bottom-nav">
+    <button class="nav-item active" data-target="owner-view">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+      <span>Owner</span>
+    </button>
+    <button class="nav-item" data-target="referrer-view">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+      <span>Referrer</span>
+    </button>
+    <button class="nav-item" data-target="referee-view">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+      <span>Referee</span>
+    </button>
+  </nav>
+
+  <script src="/app.js"></script>
+</body>
+</html>

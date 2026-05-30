@@ -1,0 +1,246 @@
+/* User requested: Dark themed (#121214), purple accents (#6366f1) */
+:root {
+  --bg-color: #121214;
+  --panel-bg: #1E1E24;
+  --accent: #6366f1;
+  --accent-hover: #4f46e5;
+  --text-main: #ffffff;
+  --text-muted: #a1a1aa;
+  --border: #27272a;
+  --nav-height: 72px;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+body {
+  background-color: var(--bg-color);
+  color: var(--text-main);
+  /* Mobile app feel */
+  user-select: none;
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 100vw;
+}
+
+#app {
+  flex: 1;
+  overflow-y: auto;
+  padding-bottom: var(--nav-height);
+  position: relative;
+}
+
+/* Panels */
+.panel {
+  display: none;
+  padding: 24px 20px;
+  animation: fadeIn 0.3s ease forwards;
+}
+.panel.active {
+  display: block;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.panel-header {
+  margin-bottom: 32px;
+  text-align: center;
+}
+
+.panel-header h2 {
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  margin-bottom: 8px;
+}
+
+.panel-header p {
+  color: var(--text-muted);
+  font-size: 15px;
+}
+
+/* Inputs and Buttons */
+label {
+  display: block;
+  font-size: 14px;
+  color: var(--text-muted);
+  margin-bottom: 8px;
+  font-weight: 500;
+}
+
+input {
+  width: 100%;
+  background-color: var(--panel-bg);
+  border: 1px solid var(--border);
+  color: var(--text-main);
+  border-radius: 12px;
+  padding: 16px;
+  font-size: 16px;
+  margin-bottom: 24px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+input:focus {
+  border-color: var(--accent);
+}
+
+/* 
+User requested: "Make all buttons large and finger-friendly (min-height 48px)"
+*/
+button {
+  width: 100%;
+  min-height: 56px; /* Enhanced finger friendliness */
+  border-radius: 16px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: transform 0.1s, background-color 0.2s;
+}
+
+button:active {
+  transform: scale(0.98);
+}
+
+.primary-btn {
+  background-color: var(--accent);
+  color: #fff;
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+}
+
+.primary-btn:hover {
+  background-color: var(--accent-hover);
+}
+
+.secondary-btn {
+  background-color: transparent;
+  color: var(--accent);
+  border: 2px solid var(--accent);
+}
+
+.actions {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 32px;
+}
+
+/* QR Code Display */
+.qr-container {
+  margin-top: 32px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 32px;
+  background-color: var(--panel-bg);
+  border-radius: 24px;
+  border: 1px solid var(--border);
+}
+
+/* Image Preview */
+.image-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 24px;
+}
+
+/* 
+User requested: "...style the '#card-preview' image so it fits beautifully on mobile screens."
+*/
+#card-preview {
+  width: 100%;
+  max-width: 320px;
+  height: auto;
+  aspect-ratio: 4 / 5;
+  object-fit: contain;
+  background-color: var(--panel-bg);
+  border-radius: 24px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+  border: 1px solid var(--border);
+}
+
+/* HTML5 QR Scanner overrides */
+.reader-wrapper {
+  border-radius: 24px;
+  overflow: hidden;
+  margin-bottom: 24px;
+}
+
+#reader {
+  width: 100%;
+  border: none !important;
+}
+
+#reader__dashboard_section_csr button {
+  background-color: var(--text-muted) !important;
+  color: var(--bg-color) !important;
+  border-radius: 8px !important;
+  min-height: 40px !important;
+  margin-top: 10px;
+}
+
+/* Bottom Navigation */
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: calc(var(--nav-height) + env(safe-area-inset-bottom));
+  background-color: rgba(18, 18, 20, 0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-top: 1px solid var(--border);
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-start;
+  padding-top: 12px;
+  z-index: 100;
+}
+
+.nav-item {
+  background: none;
+  min-height: auto;
+  width: auto;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-muted);
+  gap: 6px;
+  box-shadow: none;
+  font-weight: 500;
+  border-radius: 0;
+}
+
+.nav-item svg {
+  transition: transform 0.2s;
+}
+
+.nav-item span {
+  font-size: 11px;
+}
+
+.nav-item.active {
+  color: var(--accent);
+}
+
+.nav-item.active svg {
+  transform: translateY(-2px);
+}

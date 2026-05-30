@@ -1,0 +1,6 @@
+{
+  "name": "Referral PWA",
+  "description": "A 3-user referral PWA using vanilla JS and Supabase",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
