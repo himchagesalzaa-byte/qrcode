@@ -18,13 +18,38 @@
   <!-- App Container -->
   <div id="app">
 
+    <!-- 0. Onboarding View -->
+    <div id="onboarding-view" class="panel active" style="display: flex; flex-direction: column; justify-content: center; height: 100%; text-align: center;">
+      <h1 style="margin-bottom: 16px; font-size: 24px;">Referral Rewards</h1>
+      <p style="color: var(--text-muted); margin-bottom: 32px; font-size: 16px; line-height: 1.5;">Welcome! How would you like to use this app today?</p>
+      
+      <div style="background: rgba(255,255,255,0.05); padding: 24px; border-radius: 16px; margin-bottom: 16px; border: 1px solid rgba(255,255,255,0.1);">
+        <h3 style="margin-bottom: 8px;">For Store Owners</h3>
+        <p style="color: var(--text-muted); font-size: 14px; margin-bottom: 16px;">Create a campaign and generate codes for your customers to refer their friends.</p>
+        <button id="btn-select-owner" class="primary-btn">Start as Store Owner</button>
+      </div>
+
+      <div style="background: rgba(255,255,255,0.05); padding: 24px; border-radius: 16px; border: 1px solid rgba(255,255,255,0.1);">
+        <h3 style="margin-bottom: 8px;">For Customers</h3>
+        <p style="color: var(--text-muted); font-size: 14px; margin-bottom: 16px;">Join a store's program and earn rewards by referring your friends.</p>
+        <button id="btn-select-customer" class="secondary-btn">Start as Customer</button>
+      </div>
+    </div>
+
     <!-- 1. Store Owner View -->
-    <div id="owner-view" class="panel active">
+    <div id="owner-view" class="panel">
       <div class="panel-header">
         <h2>Store Owner Panel</h2>
         <p>Manage campaign & verify</p>
       </div>
       <div class="panel-content">
+        <div style="background: rgba(255,255,255,0.05); padding: 16px; border-radius: 12px; margin-bottom: 24px; font-size: 14px; color: #a1a1aa; line-height: 1.4;">
+          <p style="margin-bottom: 8px;"><strong>How to use:</strong></p>
+          <ol style="margin: 0; padding-left: 20px;">
+            <li style="margin-bottom: 6px;">Click <b>Generate Claim Code</b> and show it to a customer so they can join the program.</li>
+            <li>Use the <b>Scanner</b> to scan returning customers' QR codes and grant them discounts.</li>
+          </ol>
+        </div>
         <button id="gen-qr-btn" class="primary-btn">Generate Claim Code</button>
         <div class="qr-container" id="owner-qr-container" style="display:none;">
             <div id="store-qr"></div>
@@ -48,6 +73,14 @@
         <p>Share this card and get rewarded!</p>
       </div>
       <div class="panel-content">
+        <div style="background: rgba(255,255,255,0.05); padding: 16px; border-radius: 12px; margin-bottom: 24px; font-size: 14px; color: #a1a1aa; line-height: 1.4;">
+          <p style="margin-bottom: 8px;"><strong>How to use:</strong></p>
+          <ol style="margin: 0; padding-left: 20px;">
+            <li style="margin-bottom: 6px;">Ask the store owner to supply you with a starting claim link.</li>
+            <li style="margin-bottom: 6px;">Save the image generated below, or copy your referral link.</li>
+            <li>Send the image or link to your friends. When they bring it to the store, you both get a reward!</li>
+          </ol>
+        </div>
         <!-- Hidden Canvas -->
         <canvas id="social-canvas" width="1080" height="1350" style="display:none;"></canvas>
 
@@ -70,6 +103,14 @@
         <p>Show this to the cashier to redeem</p>
       </div>
       <div class="panel-content">
+        <div style="background: rgba(255,255,255,0.05); padding: 16px; border-radius: 12px; margin-bottom: 24px; font-size: 14px; color: #a1a1aa; line-height: 1.4;">
+          <p style="margin-bottom: 8px;"><strong>How to use:</strong></p>
+          <ol style="margin: 0; padding-left: 20px;">
+            <li style="margin-bottom: 6px;">Access this app using a friend's referral link.</li>
+            <li style="margin-bottom: 6px;">A QR Code should be securely generated below.</li>
+            <li>Present this QR Code to the cashier at the store to claim your discount!</li>
+          </ol>
+        </div>
         <div class="qr-container" id="referee-qr-container" style="display:none;">
           <div id="referee-qr"></div>
         </div>
@@ -82,16 +123,16 @@
   </div>
 
   <!-- Bottom Navigation -->
-  <nav class="bottom-nav">
-    <button class="nav-item active" data-target="owner-view">
+  <nav class="bottom-nav" id="main-nav" style="display: none;">
+    <button class="nav-item owner-only" data-target="owner-view">
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
       <span>Owner</span>
     </button>
-    <button class="nav-item" data-target="referrer-view">
+    <button class="nav-item customer-only" data-target="referrer-view">
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
       <span>Referrer</span>
     </button>
-    <button class="nav-item" data-target="referee-view">
+    <button class="nav-item customer-only" data-target="referee-view">
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
       <span>Referee</span>
     </button>

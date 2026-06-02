@@ -244,3 +244,32 @@ User requested: "...style the '#card-preview' image so it fits beautifully on mo
 .nav-item.active svg {
   transform: translateY(-2px);
 }
+
+/* Desktop Container Styles */
+@media (min-width: 768px) {
+  body {
+    align-items: center;
+    justify-content: center;
+    background-color: #000;
+  }
+
+  #app {
+    width: 100%;
+    max-width: 420px;
+    height: 90vh;
+    max-height: 850px;
+    flex: none;
+    border-radius: 36px;
+    border: 8px solid #27272a;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8);
+    position: relative;
+    overflow-y: auto;
+    background-color: var(--bg-color);
+  }
+
+  .bottom-nav {
+    position: absolute;
+    border-bottom-left-radius: 28px;
+    border-bottom-right-radius: 28px;
+  }
+}

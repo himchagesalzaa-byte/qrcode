@@ -11,13 +11,66 @@ function initApp() {
 
   if (claimToken) {
     localStorage.setItem('referrer_token', claimToken);
+    localStorage.setItem('role', 'customer');
   }
   if (redeemToken) {
     localStorage.setItem('referee_token', redeemToken);
+    localStorage.setItem('role', 'customer');
   }
 
   if (claimToken || redeemToken) {
     window.history.replaceState({}, document.title, window.location.pathname);
+  }
+
+  // Handle Onboarding / Routing
+  let currentRole = localStorage.getItem('role');
+  const mainNav = document.getElementById('main-nav');
+  const ownerBtns = document.querySelectorAll('.owner-only');
+  const customerBtns = document.querySelectorAll('.customer-only');
+
+  function activatePanel(panelId) {
+    document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+    document.getElementById(panelId).classList.add('active');
+    
+    const navBtn = document.querySelector(`.nav-item[data-target="${panelId}"]`);
+    if (navBtn) navBtn.classList.add('active');
+  }
+
+  function applyRole(role) {
+    localStorage.setItem('role', role);
+    mainNav.style.display = 'flex';
+    if (role === 'owner') {
+       ownerBtns.forEach(el => el.style.display = 'flex');
+       customerBtns.forEach(el => el.style.display = 'none');
+       activatePanel('owner-view');
+    } else {
+       ownerBtns.forEach(el => el.style.display = 'none');
+       customerBtns.forEach(el => el.style.display = 'flex');
+       // Auto-route customer based on available tokens
+       if (redeemToken || localStorage.getItem('referee_token')) {
+         activatePanel('referee-view');
+       } else {
+         activatePanel('referrer-view');
+       }
+    }
+  }
+
+  if (currentRole) {
+    applyRole(currentRole);
+  } else {
+    activatePanel('onboarding-view');
+    mainNav.style.display = 'none';
+  }
+
+  const btnSelectOwner = document.getElementById('btn-select-owner');
+  if (btnSelectOwner) {
+    btnSelectOwner.addEventListener('click', () => applyRole('owner'));
+  }
+  
+  const btnSelectCustomer = document.getElementById('btn-select-customer');
+  if (btnSelectCustomer) {
+    btnSelectCustomer.addEventListener('click', () => applyRole('customer'));
   }
 
   // 3. Tab Switching
